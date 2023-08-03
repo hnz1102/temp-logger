@@ -41,5 +41,71 @@ To charge a battery, just connect to a USB mini-B port from the bus-powered USB 
 
 DO NOT CONTINUE THE CHARGE IF THE BATTERY IS FULL FOR A LONG TIME. 
 
+# How to build code
+
+Using Ubuntu 22.04.02 LTS
+
+1. Install Rust Compiler
+```bash
+$ sudo apt -y install git python3 python3-pip gcc build-essential curl pkg-config libudev-dev libtinfo5 clang libclang-dev llvm-dev
+$ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+$ source "$HOME/.cargo/env"
+```
+
+2. Install toolchain for ESP32-C3
+```bash
+$ cargo install ldproxy
+$ cargo install espup
+$ rustup toolchain install nightly --component rust-src
+$ rustup target add riscv32imc-unknown-none-elf
+$ cargo install cargo-espflash
+$ rustup component add rust-src --toolchain nightly-2023-06-10-x86_64-unknown-linux-gnu
+```
+
+3. Add UDEV rules
+```bash
+$ sudo sh -c 'echo "SUBSYSTEMS==\"usb\", ATTRS{idVendor}==\"303a\", ATTRS{idProduct}==\"1001\", MODE=\"0666\"" > /etc/udev/rules.d/99-esp32.rules'
+$ sudo udevadm control --reload-rules
+$ sudo udevadm trigger
+```
+
+4. Download Temp-Logger code
+```bash
+$ git clone https://github.com/hnz1102/temp-logger.git
+$ cd temp-logger/src/temp-logger
+``` 
+5. Setting WiFi SSID, Password, and InfluxDB server IP address.
+```bash
+src\temp-logger\cfg.toml
+
+[templogger]
+wifi_ssid = "<your-AP-ssid>"     # Set your AP ssid.
+wifi_psk = "<your-AP-Password>"  # Set password for ssid
+http_server = "<PC address>:3000" # Set IP address and port. port should be 3000.
+```
+
+6. Connecting the board and Set device.
+```bash
+Connecting the Temp-Logger by USB to this build code PC. Then, 
+$ cargo espflash board-info
+select /dev/ttyACM0
+Chip type:         esp32c3 (revision v0.4)
+Crystal frequency: 40MHz
+Flash size:        4MB
+Features:          WiFi, BLE
+MAC address:       xx:xx:xx:xx:xx:xx
+```
+
+7. Build code and writing flash
+```bash
+$ cargo espflash flash --release --monitor
+App/part. size:    950,864/3,145,728 bytes, 30.23%
+[00:00:00] [========================================]      12/12      0x0                                                                       
+[00:00:00] [========================================]       1/1       0x8000                                                                    
+[00:00:11] [========================================]     535/535     0x10000                                                                   [2023-08-03T13:05:12Z INFO ] Flashing has completed!
+
+And automaticaly boot!
+```
+
 ## LICENSE
 This Software is licensed under MIT. Other Hardware Schematic documents are licensed under CC-BY-SA V4.0.
