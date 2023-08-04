@@ -47,8 +47,9 @@ Using Ubuntu 22.04.02 LTS
 
 1. Install Rust Compiler
 ```bash
-$ sudo apt -y install git python3 python3-pip gcc build-essential curl pkg-config libudev-dev libtinfo5 clang libclang-dev llvm-dev
+$ sudo apt -y install git python3 python3-pip gcc build-essential curl pkg-config libudev-dev libtinfo5 clang libclang-dev llvm-dev udev
 $ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+select No.1
 $ source "$HOME/.cargo/env"
 ```
 
