@@ -60,7 +60,6 @@ $ cargo install espup
 $ rustup toolchain install nightly --component rust-src
 $ rustup target add riscv32imc-unknown-none-elf
 $ cargo install cargo-espflash
-$ rustup component add rust-src --toolchain nightly-2023-06-10-x86_64-unknown-linux-gnu
 ```
 
 3. Add UDEV rules
@@ -85,7 +84,7 @@ wifi_psk = "<your-AP-Password>"  # Set password for ssid
 http_server = "<PC address>:3000" # Set IP address and port. port should be 3000.
 ```
 
-6. Connecting the board and Set device.
+6. Connecting the board and Set device and set toolchain.
 ```bash
 Connecting the Temp-Logger by USB to this build code PC. Then, 
 $ cargo espflash board-info
@@ -95,6 +94,8 @@ Crystal frequency: 40MHz
 Flash size:        4MB
 Features:          WiFi, BLE
 MAC address:       xx:xx:xx:xx:xx:xx
+
+$ rustup component add rust-src --toolchain nightly-2023-06-10-x86_64-unknown-linux-gnu
 ```
 
 7. Build code and writing flash
@@ -108,5 +109,78 @@ App/part. size:    950,864/3,145,728 bytes, 30.23%
 And automaticaly boot!
 ```
 
+# How to Install the influxDB and Agent
+
+1. Download [influxDB](https://docs.influxdata.com/influxdb/v2.7/install/?t=Linux) and Install.
+```bash
+$ wget https://dl.influxdata.com/influxdb/releases/influxdb2-2.7.0-amd64.deb
+$ sudo dpkg -i influxdb2-2.7.0-amd64.deb
+$ sudo service influxdb start
+```
+
+2. Configure the influxDB
+
+```
+Connect to the 'http://<influxDB installed PC Address>:8086'
+```
+Click `GET STARTED` and set `Username`, `Password`, `Initial Organization Name`, and `Initial Bucket Name`
+|Term|Value|
+|---|---|
+|Username|Set login username as influxDB administrator web console|
+|Password|Set login password as influxDB administrator web console|
+|Initial Organization Name| Organization Name ex. ORG|
+|Initail Bucket Name| LOGGER |
+
+After set them, click `CONTINUE`.
+
+3. Copy the operator API token.
+
+You can see the operator API token on the browser. YOU WON'T BE ABLE TO SEE IT AGAIN!
+
+After copy the token, click `CONFIGURE LATER`.
+
+4. Import the Dashboard Template.
+
+Click the `Dashboard` icon, and select `Import Dashboard` from the `CREATE DASHBOARD` menu.
+
+Drop the `src/server/temp-logger_dashboard.json` file to `Drop a file here`, then click `IMPORT JSON AS DASHBOARD`.
+
+You can see the `Temp-Logger Dashboard` pannel on the Dashboards page.
+
+Click this panel, and You can see the Temp-Logger Dashboard.
+
+If you want to customize the dashboard design, click configure mark. You can change the graph design.
+
+5. Install the Agent.
+
+Temp-Logger can't directly send data to influxDB API since ESP32-C3 has not TSL software stack. This agent program is responsible for changing HTTP communication from Temp-Logger to HTTPS communication and passing data to the InfluxDB API. This agent is purpose only for a local network because it has no security.
+
+Before install you have to change parameters in main.js.
+
+src/server/main.js
+```javascript
+const token = "<influxDB API Access Token>"
+const url = 'http://<influxDB installed IP address>:8086'
+let org = `<YOUR ORGANIZATION NAME: it has to be same the Initial Organization Name>`
+let bucket = `LOGGER`
+```
+
+Install the agent program.
+
+```bash
+$ cd src/server/
+$ ./install.sh
+```
+If it is `Active: active`` as shown below, it has started normally.
+```
+● influxdb-agent.service - InfluxDB Agent
+     Loaded: loaded (/lib/systemd/system/influxdb-agent.service; enabled; vendor preset: enabled)
+     Active: active (running) since Sat 2023-08-05 02:24:18 UTC; 15ms ago
+```
+
+6. Start Temp-Logger Logging and Send Data.
+
+Push the START/STOP button, and push SEND button. Logging data will be sent to the influxDB. You can see the data on the dashboard.
+
 ## LICENSE
-This Software is licensed under MIT. Other Hardware Schematic documents are licensed under CC-BY-SA V4.0.
+This source code is licensed under MIT. Other Hardware Schematic documents are licensed under CC-BY-SA V4.0.
