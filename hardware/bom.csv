@@ -22,7 +22,7 @@ Q102,IRF7606TRPBF,Package_SO:MSOP-8_3x3mm_P0.65mm,,IRF7606TRPBFCT-ND,https://www
 R106,12K 1%,tbctl:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder,,311-12.0KHRCT-ND,https://www.digikey.com/en/products/detail/yageo/RC0603FR-0712KL/726913,1
 R112,2K,tbctl:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder,,311-2.0KGRCT-ND,https://www.digikey.com/en/products/detail/yageo/RC0603JR-072KL/726726,1
 R115,100K,tbctl:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder,,311-100KGRCT-ND,https://www.digikey.com/en/products/detail/yageo/RC0603JR-07100KL/726698,1
-"SW101, SW102",SW_Push_LED,tbctl:LS601-CU_CAP,-- ?Éü?ÉÉ?Ç??Ç??Åï?Çå?Åü?Ä? --,,-- ?Éü?ÉÉ?Ç??Ç??Åï?Çå?Åü?Ä? --,2
+"SW101, SW102",SW_Push_LED,tbctl:LS601-CU_CAP,,,,2
 SW103,BOOT TS-06104,tbctl:TS-06104,P-15969,,https://akizukidenshi.com/catalog/g/gP-15969/,1
 SW104,RESET TS-06104,tbctl:TS-06104,P-15969,,https://akizukidenshi.com/catalog/g/gP-15969/,1
 SW105,SLIDE_SW IS-1245T-G,tbctl:SLIDE_SW_IS1235-G,P-15368,,https://akizukidenshi.com/catalog/g/gP-15368/,1
