@@ -12,3 +12,4 @@ convert n8.bmp -type grayscale -colors 2 n8.bmp
 convert n9.bmp -type grayscale -colors 2 n9.bmp 
 convert c.bmp -type grayscale -colors 2 c.bmp
 convert dot.bmp -type grayscale -colors 2 dot.bmp
+convert minus.bmp -type grayscale -colors 2 minus.bmp

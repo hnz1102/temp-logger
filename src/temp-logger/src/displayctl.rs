@@ -116,6 +116,8 @@ impl DisplayPanel {
             let cc_img: Image<Bmp<BinaryColor>> = Image::new(&cc, Point::new(88, 0));
             let dot = Bmp::from_slice(include_bytes!("./img/dot.bmp")).unwrap();
             let dot_img: Image<Bmp<BinaryColor>> = Image::new(&dot, Point::new(60, 0));
+            let minus = Bmp::from_slice(include_bytes!("./img/minus.bmp")).unwrap();
+            let minus_img: Image<Bmp<BinaryColor>> = Image::new(&minus, Point::zero());
             let mut digit_img = n0_img.translate(Point::new(0,0));
 
             let mut loopcount = 0;
@@ -139,43 +141,46 @@ impl DisplayPanel {
                                     digit_img = n0_img.translate(Point::new(pos_x, 0));
                                 }
                             },
-                            1 => {
+                            1 | -1 => {
                                 digit_img = n1_img.translate(Point::new(pos_x, 0));
                                 first_digit = false;
                             },
-                            2 => {
+                            2 | -2 => {
                                 digit_img = n2_img.translate(Point::new(pos_x, 0));
                                 first_digit = false;
                             },
-                            3 => {
+                            3 | -3 => {
                                 digit_img = n3_img.translate(Point::new(pos_x, 0));
                                 first_digit = false;
                             },
-                            4 => {
+                            4 | -4 => {
                                 digit_img = n4_img.translate(Point::new(pos_x, 0));
                                 first_digit = false;
                             },
-                            5 => {
+                            5 | -5 => {
                                 digit_img = n5_img.translate(Point::new(pos_x, 0));
                                 first_digit = false;
                             },
-                            6 => {
+                            6 | -6 => {
                                 digit_img = n6_img.translate(Point::new(pos_x, 0));
                                 first_digit = false;
                             },
-                            7 => {
+                            7 | -7 => {
                                 digit_img = n7_img.translate(Point::new(pos_x, 0));
                                 first_digit = false;
                             },
-                            8 => {
+                            8 | -8 => {
                                 digit_img = n8_img.translate(Point::new(pos_x, 0));
                                 first_digit = false;
                             },
-                            9 => {
+                            9 | -9 => {
                                 digit_img = n9_img.translate(Point::new(pos_x, 0));
                                 first_digit = false;
                             },
                             _ => {}
+                        }
+                        if temp < 0.0 && digit == 0 {
+                            digit_img = minus_img.translate(Point::new(pos_x, 0));
                         }
                         digit_img.draw(&mut display).unwrap();
                         temp = temp - digit_10 * (num as f32);

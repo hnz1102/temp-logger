@@ -203,13 +203,13 @@ fn main() -> anyhow::Result<()> {
 fn get_temp(temp: & [u8; 4]) -> Result<Temperature, Temperature>
 {
     let msg;
-    match temp[3] & 0x01 {
-        0x01 => { msg = "OC"  },
-        0x02 => { msg = "SCG" },
-        0x04 => { msg = "SCV" },
+    match temp[3] & 0x7 {
+        0x01 => { msg = "OC ERROR"  },
+        0x02 => { msg = "SCG ERROR" },
+        0x04 => { msg = "SCV ERROR" },
         _ => {
-            let tempval : u32 = ((temp[0] as u32) << 6) | ((temp[1] >> 2) as u32);
-            let intempval : u32 = ((temp[2] as u32) << 4) | ((temp[3] >> 4) as u32);
+            let tempval : i32 = (((temp[0] as i8) as i32) << 6) | ((temp[1] >> 2) as i32);
+            let intempval : i32 = (((temp[2] as i8) as i32) << 4) | ((temp[3] >> 4) as i32);
             let ta = (intempval as f32) * 0.0625;
             let tr = (tempval as f32) * 0.25;
             return Ok(Temperature { _ta: ta, tr: tr, msg: "OK".to_string() });
