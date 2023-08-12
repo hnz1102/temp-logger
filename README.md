@@ -24,7 +24,7 @@ Put on the thermocouple where you want to measure the temperature.
 
 Push the START/STOP button, then TempLogger starts to log the temperature. And if you want to send data on temperature, push the SEND button. During the measurement, TempLogger can send the data to a PC. 
 
-![board](doc/board2.png)
+![board](doc/board.png)
 
 
 A display can show you the current temperature, battery voltage, and WiFi connection status.
