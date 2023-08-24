@@ -13,3 +13,4 @@ convert n9.bmp -type grayscale -colors 2 n9.bmp
 convert c.bmp -type grayscale -colors 2 c.bmp
 convert dot.bmp -type grayscale -colors 2 dot.bmp
 convert minus.bmp -type grayscale -colors 2 minus.bmp
+convert usb-power.bmp -type grayscale -colors 2 usb-power.bmp

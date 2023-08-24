@@ -90,6 +90,8 @@ impl DisplayPanel {
             let bat80_img: Image<Bmp<BinaryColor>> = Image::new(&bat80, Point::new(110,36));
             let bat100 = Bmp::from_slice(include_bytes!("./img/battery-100.bmp")).unwrap();
             let bat100_img: Image<Bmp<BinaryColor>> = Image::new(&bat100, Point::new(110,36));
+            let usbpwr = Bmp::from_slice(include_bytes!("./img/usb-power.bmp")).unwrap();
+            let usbpwr_img: Image<Bmp<BinaryColor>> = Image::new(&usbpwr, Point::new(110,36));
 
             // Number BMP
             let n0 = Bmp::from_slice(include_bytes!("./img/n0.bmp")).unwrap();
@@ -237,8 +239,11 @@ impl DisplayPanel {
                 else if lck.volt >= 4.0 && lck.volt < 4.1 {
                     bat80_img.draw(&mut display).unwrap();
                 }
-                else if lck.volt >= 4.1 {
+                else if lck.volt >= 4.1 && lck.volt < 4.7 {
                     bat100_img.draw(&mut display).unwrap();
+                }
+                else if lck.volt >= 4.7 {
+                    usbpwr_img.draw(&mut display).unwrap();
                 }
                 if loopcount == 15 {
                     loopcount = 0;
