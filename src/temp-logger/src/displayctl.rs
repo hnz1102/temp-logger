@@ -3,7 +3,7 @@ use std::{thread, time::Duration, sync::Arc, sync::Mutex};
 use esp_idf_hal::i2c;
 use ssd1306::{I2CDisplayInterface, prelude::*, Ssd1306};
 use embedded_graphics::{
-    mono_font::{ascii::FONT_10X20, MonoTextStyle},
+    mono_font::{ascii::FONT_10X20, ascii::FONT_5X8, MonoTextStyle},
     image::Image,
     pixelcolor::{BinaryColor},
     text::{Text},
@@ -71,38 +71,54 @@ impl DisplayPanel {
                 .into_buffered_graphics_mode();        
             display.init().unwrap();
             let style = MonoTextStyle::new(&FONT_10X20, BinaryColor::On);
+            let small_style = MonoTextStyle::new(&FONT_5X8, BinaryColor::On);
             display.clear();
             display.flush().unwrap();
-            let wifibmp = Bmp::from_slice(include_bytes!("./img/wifirev.bmp"))
-                .expect("Failed to load BMP image");
-            let wifiimg: Image<Bmp<BinaryColor>> = Image::new(&wifibmp, Point::zero());
-            let wifitrans = wifiimg.translate(Point::new(95,1));
+            let wifibmp = Bmp::from_slice(include_bytes!("./img/wifirev.bmp")).unwrap();
+            let wifi_img: Image<Bmp<BinaryColor>> = Image::new(&wifibmp, Point::new(108,1));
 
             // Battery BMP
-            let bat0 = Bmp::from_slice(include_bytes!("./img/battery-0.bmp"))
-                .expect("Failed to load BMP image");
-            let bat0img: Image<Bmp<BinaryColor>> = Image::new(&bat0, Point::zero());
-            let bat0tr = bat0img.translate(Point::new(95,40));
-            let bat20 = Bmp::from_slice(include_bytes!("./img/battery-20.bmp"))
-                .expect("Failed to load BMP image");
-            let bat20img: Image<Bmp<BinaryColor>> = Image::new(&bat20, Point::zero());
-            let bat20tr = bat20img.translate(Point::new(95,40));
-            let bat40 = Bmp::from_slice(include_bytes!("./img/battery-40.bmp"))
-                .expect("Failed to load BMP image");
-            let bat40img: Image<Bmp<BinaryColor>> = Image::new(&bat40, Point::zero());
-            let bat40tr = bat40img.translate(Point::new(95,40));
-            let bat60 = Bmp::from_slice(include_bytes!("./img/battery-60.bmp"))
-                .expect("Failed to load BMP image");
-            let bat60img: Image<Bmp<BinaryColor>> = Image::new(&bat60, Point::zero());
-            let bat60tr = bat60img.translate(Point::new(95,40));
-            let bat80 = Bmp::from_slice(include_bytes!("./img/battery-80.bmp"))
-                .expect("Failed to load BMP image");
-            let bat80img: Image<Bmp<BinaryColor>> = Image::new(&bat80, Point::zero());
-            let bat80tr = bat80img.translate(Point::new(95,40));
-            let bat100 = Bmp::from_slice(include_bytes!("./img/battery-100.bmp"))
-                .expect("Failed to load BMP image");
-            let bat100img: Image<Bmp<BinaryColor>> = Image::new(&bat100, Point::zero());
-            let bat100tr = bat100img.translate(Point::new(95,40));
+            let bat0 = Bmp::from_slice(include_bytes!("./img/battery-0.bmp")).unwrap();
+            let bat0_img: Image<Bmp<BinaryColor>> = Image::new(&bat0, Point::new(110,36));
+            let bat20 = Bmp::from_slice(include_bytes!("./img/battery-20.bmp")).unwrap();
+            let bat20_img: Image<Bmp<BinaryColor>> = Image::new(&bat20, Point::new(110,36));
+            let bat40 = Bmp::from_slice(include_bytes!("./img/battery-40.bmp")).unwrap();
+            let bat40_img: Image<Bmp<BinaryColor>> = Image::new(&bat40, Point::new(110,36));
+            let bat60 = Bmp::from_slice(include_bytes!("./img/battery-60.bmp")).unwrap();
+            let bat60_img: Image<Bmp<BinaryColor>> = Image::new(&bat60, Point::new(110,36));
+            let bat80 = Bmp::from_slice(include_bytes!("./img/battery-80.bmp")).unwrap();
+            let bat80_img: Image<Bmp<BinaryColor>> = Image::new(&bat80, Point::new(110,36));
+            let bat100 = Bmp::from_slice(include_bytes!("./img/battery-100.bmp")).unwrap();
+            let bat100_img: Image<Bmp<BinaryColor>> = Image::new(&bat100, Point::new(110,36));
+
+            // Number BMP
+            let n0 = Bmp::from_slice(include_bytes!("./img/n0.bmp")).unwrap();
+            let n0_img: Image<Bmp<BinaryColor>> = Image::new(&n0, Point::zero());
+            let n1 = Bmp::from_slice(include_bytes!("./img/n1.bmp")).unwrap();
+            let n1_img: Image<Bmp<BinaryColor>> = Image::new(&n1, Point::zero());
+            let n2 = Bmp::from_slice(include_bytes!("./img/n2.bmp")).unwrap();
+            let n2_img: Image<Bmp<BinaryColor>> = Image::new(&n2, Point::zero());
+            let n3 = Bmp::from_slice(include_bytes!("./img/n3.bmp")).unwrap();
+            let n3_img: Image<Bmp<BinaryColor>> = Image::new(&n3, Point::zero());
+            let n4 = Bmp::from_slice(include_bytes!("./img/n4.bmp")).unwrap();
+            let n4_img: Image<Bmp<BinaryColor>> = Image::new(&n4, Point::zero());
+            let n5 = Bmp::from_slice(include_bytes!("./img/n5.bmp")).unwrap();
+            let n5_img: Image<Bmp<BinaryColor>> = Image::new(&n5, Point::zero());
+            let n6 = Bmp::from_slice(include_bytes!("./img/n6.bmp")).unwrap();
+            let n6_img: Image<Bmp<BinaryColor>> = Image::new(&n6, Point::zero());
+            let n7 = Bmp::from_slice(include_bytes!("./img/n7.bmp")).unwrap();
+            let n7_img: Image<Bmp<BinaryColor>> = Image::new(&n7, Point::zero());
+            let n8 = Bmp::from_slice(include_bytes!("./img/n8.bmp")).unwrap();
+            let n8_img: Image<Bmp<BinaryColor>> = Image::new(&n8, Point::zero());
+            let n9 = Bmp::from_slice(include_bytes!("./img/n9.bmp")).unwrap();
+            let n9_img: Image<Bmp<BinaryColor>> = Image::new(&n9, Point::zero());
+            let cc = Bmp::from_slice(include_bytes!("./img/c.bmp")).unwrap();
+            let cc_img: Image<Bmp<BinaryColor>> = Image::new(&cc, Point::new(88, 0));
+            let dot = Bmp::from_slice(include_bytes!("./img/dot.bmp")).unwrap();
+            let dot_img: Image<Bmp<BinaryColor>> = Image::new(&dot, Point::new(60, 0));
+            let minus = Bmp::from_slice(include_bytes!("./img/minus.bmp")).unwrap();
+            let minus_img: Image<Bmp<BinaryColor>> = Image::new(&minus, Point::zero());
+            let mut digit_img = n0_img.translate(Point::new(0,0));
 
             let mut loopcount = 0;
             loop {
@@ -110,52 +126,119 @@ impl DisplayPanel {
                 // Current Plate Temparature
                 loopcount += 1;
                 display.clear();
-                Text::new(&lck.panel_msg, Point::new(1, 20), style).draw(&mut display).unwrap();
+                let mut temp = lck.panel_temp;
+                if temp != -999.0 {
+                    dot_img.draw(&mut display).unwrap();                
+                    cc_img.draw(&mut display).unwrap();
+                    let mut digit_10 = 100.0;
+                    let mut first_digit = true;
+                    let mut pos_x = 0;
+                    for digit in 0..=3 {
+                        let num = (temp / digit_10) as i32;
+                        match num {
+                            0 => {
+                                if !first_digit {
+                                    digit_img = n0_img.translate(Point::new(pos_x, 0));
+                                }
+                            },
+                            1 | -1 => {
+                                digit_img = n1_img.translate(Point::new(pos_x, 0));
+                                first_digit = false;
+                            },
+                            2 | -2 => {
+                                digit_img = n2_img.translate(Point::new(pos_x, 0));
+                                first_digit = false;
+                            },
+                            3 | -3 => {
+                                digit_img = n3_img.translate(Point::new(pos_x, 0));
+                                first_digit = false;
+                            },
+                            4 | -4 => {
+                                digit_img = n4_img.translate(Point::new(pos_x, 0));
+                                first_digit = false;
+                            },
+                            5 | -5 => {
+                                digit_img = n5_img.translate(Point::new(pos_x, 0));
+                                first_digit = false;
+                            },
+                            6 | -6 => {
+                                digit_img = n6_img.translate(Point::new(pos_x, 0));
+                                first_digit = false;
+                            },
+                            7 | -7 => {
+                                digit_img = n7_img.translate(Point::new(pos_x, 0));
+                                first_digit = false;
+                            },
+                            8 | -8 => {
+                                digit_img = n8_img.translate(Point::new(pos_x, 0));
+                                first_digit = false;
+                            },
+                            9 | -9 => {
+                                digit_img = n9_img.translate(Point::new(pos_x, 0));
+                                first_digit = false;
+                            },
+                            _ => {}
+                        }
+                        if temp < 0.0 && digit == 0 {
+                            digit_img = minus_img.translate(Point::new(pos_x, 0));
+                        }
+                        digit_img.draw(&mut display).unwrap();
+                        temp = temp - digit_10 * (num as f32);
+                        pos_x += 20;
+                        digit_10 /= 10.0;
+                        if digit == 2 {
+                            pos_x += 8;
+                        }
+                    }
+                }
+                else {
+                    Text::new(&lck.panel_msg, Point::new(1, 20), style).draw(&mut display).unwrap();
+                }
                 match lck.status {
                     LoggingStatus::Start => {
                         match loopcount {
                             0..=5 | 10..=15 => {
-                                Text::new("Logging..", Point::new(1, 40), style).draw(&mut display).unwrap();
+                                Text::new("Logging..", Point::new(1, 55), style).draw(&mut display).unwrap();
                             },
                             _ => {},
                         }
                     },
                     LoggingStatus::Stop => {
-                        Text::new("Stop", Point::new(1, 40), style).draw(&mut display).unwrap();
+                        Text::new("Stop", Point::new(1, 55), style).draw(&mut display).unwrap();
                     },
                 }
-                Text::new(&lck.pvol, Point::new(1, 60), style).draw(&mut display).unwrap();
+                Text::new(&lck.pvol, Point::new(103, 62), small_style).draw(&mut display).unwrap();
 
                 match lck.wifi {
                     WifiStatus::Disconnected => {
                         // match loopcount {
                         //     0..=5 | 10..=15 => {
-                        //         wifitrans.draw(&mut display).unwrap();
+                        //         wifi_img.draw(&mut display).unwrap();
                         //     },
                         //     _ => {},
                         // }
                     },
                     WifiStatus::Connected => {
-                        wifitrans.draw(&mut display).unwrap();
+                        wifi_img.draw(&mut display).unwrap();
                     },
                 }
                 if lck.volt < 3.7 {
-                    bat0tr.draw(&mut display).unwrap();
+                    bat0_img.draw(&mut display).unwrap();
                 }
                 else if lck.volt >= 3.7 && lck.volt < 3.8 {
-                    bat20tr.draw(&mut display).unwrap();
+                    bat20_img.draw(&mut display).unwrap();
                 }
                 else if lck.volt >= 3.8 && lck.volt < 3.9 {
-                    bat40tr.draw(&mut display).unwrap();
+                    bat40_img.draw(&mut display).unwrap();
                 }
                 else if lck.volt >= 3.9 && lck.volt < 4.0 {
-                    bat60tr.draw(&mut display).unwrap();
+                    bat60_img.draw(&mut display).unwrap();
                 }
                 else if lck.volt >= 4.0 && lck.volt < 4.1 {
-                    bat80tr.draw(&mut display).unwrap();
+                    bat80_img.draw(&mut display).unwrap();
                 }
                 else if lck.volt >= 4.1 {
-                    bat100tr.draw(&mut display).unwrap();
+                    bat100_img.draw(&mut display).unwrap();
                 }
                 if loopcount == 15 {
                     loopcount = 0;
@@ -169,35 +252,36 @@ impl DisplayPanel {
 
     pub fn set_panel_temp(&mut self, temp: f32)
     {
-        let mut lcktxt = self.txt.lock().unwrap();
-        lcktxt.panel_temp = temp;
-        lcktxt.panel_msg = format!("{:.1}C", temp);
+        let mut lck = self.txt.lock().unwrap();
+        lck.panel_temp = temp;
+        lck.panel_msg = format!("{:.1}C", temp);
     }
 
     pub fn set_current_status(&mut self, status: LoggingStatus)
     {
-        let mut lcktxt= self.txt.lock().unwrap();
-        lcktxt.status = status;
+        let mut lck= self.txt.lock().unwrap();
+        lck.status = status;
     }
 
     pub fn set_wifi_status(&mut self, status: WifiStatus)
     {
-        let mut lcktxt= self.txt.lock().unwrap();
-        lcktxt.wifi = status;
+        let mut lck= self.txt.lock().unwrap();
+        lck.wifi = status;
     }
 
     pub fn set_err_message(&mut self, line : i32, msg: String)
     {
-        let mut lcktxt = self.txt.lock().unwrap();
+        let mut lck = self.txt.lock().unwrap();
+        lck.panel_temp = -999.0;
         match line {
             1 => {
-                lcktxt.panel_msg = format!("{}", msg);
+                lck.panel_msg = format!("{}", msg);
             },
             2 => {
-                lcktxt.target_msg = format!("T:{}", msg);
+                lck.target_msg = format!("T:{}", msg);
             }
             3 => {
-                lcktxt.setup_temp = format!("S:{}", msg);
+                lck.setup_temp = format!("S:{}", msg);
             }
             _ => {
             }
@@ -205,9 +289,9 @@ impl DisplayPanel {
     }
 
     pub fn set_power_voltage(&mut self, volt: f32){
-        let mut lcktxt = self.txt.lock().unwrap();
-        lcktxt.pvol = format!("{:.2}V", volt);
-        lcktxt.volt = volt;
+        let mut lck = self.txt.lock().unwrap();
+        lck.pvol = format!("{:.2}V", volt);
+        lck.volt = volt;
     }
 
 }
