@@ -41,6 +41,12 @@ To charge a battery, just connect to a USB mini-B port from the bus-powered USB 
 
 DO NOT CONTINUE THE CHARGE IF THE BATTERY IS FULL FOR A LONG TIME. 
 
+# Case
+
+![dashboard](doc/templogger-case.jpg)
+
+There are data for 3D printer in `hardware/*.stl`.
+
 # How to build code
 
 Using Ubuntu 22.04.02 LTS
