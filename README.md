@@ -129,6 +129,7 @@ $ sudo service influxdb start
 ```
 Connect to the 'http://<influxDB installed PC Address>:8086'
 ```
+
 Click `GET STARTED` and set `Username`, `Password`, `Initial Organization Name`, and `Initial Bucket Name`
 |Term|Value|
 |---|---|

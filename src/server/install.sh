@@ -7,10 +7,14 @@
 
 # To install ./install.sh in src/server directory.
 
-export TEMPLOGGERDIR="/var/lib/templogger"
+TEMPLOGGERDIR="/var/lib/templogger"
+TEMPLOGGERSH="influxdb-agent-start.sh"
 
 sudo mkdir $TEMPLOGGERDIR
-sudo cp influxdb-agent-start.sh $TEMPLOGGERDIR
+sudo cp $TEMPLOGGERSH $TEMPLOGGERDIR
+sudo chmod 755 $TEMPLOGGERDIR/$TEMPLOGGERSH
+sudo chown root $TEMPLOGGERDIR/$TEMPLOGGERSH
+sudo chgrp root $TEMPLOGGERDIR/$TEMPLOGGERSH
 sudo cp main.js $TEMPLOGGERDIR
 sudo cp influxdb-agent.service /lib/systemd/system/.
 
@@ -22,4 +26,4 @@ sudo systemctl enable influxdb-agent.service
 sudo systemctl start influxdb-agent.service
 sudo systemctl status influxdb-agent.service
 
-eixt 0
+exit 0
