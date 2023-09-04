@@ -160,7 +160,7 @@ If you want to customize the dashboard design, click configure mark. You can cha
 
 5. Install the Agent.
 
-Temp-Logger can't directly send data to influxDB API since ESP32-C3 has not TSL software stack. This agent program is responsible for changing HTTP communication from Temp-Logger to HTTPS communication and passing data to the InfluxDB API. This agent is purpose only for a local network because it has no security.
+Temp-Logger can't directly send data to influxDB API since ESP32-C3 has not TLS software stack. This agent program is responsible for changing HTTP communication from Temp-Logger to HTTPS communication and passing data to the InfluxDB API. This agent is purpose only for a local network because it has no security.
 
 Before install you have to change parameters in main.js.
 
